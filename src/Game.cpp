@@ -1,5 +1,5 @@
-#include <bits/stdc++.h>
 #include <string>
+#include <algorithm>
 #include "Game.h"
 #include "Actor.h"
 #include "Grid.h"
@@ -38,14 +38,14 @@ bool Game::Initialize()
     return false;
   }
 
-  LoadTexture("/home/miguel/Desktop/Books/Programming/Game Development/Tower Defense/src/include/TileBrown.png", "TileBrown");
-  LoadTexture("/home/miguel/Desktop/Books/Programming/Game Development/Tower Defense/src/include/TileGreen.png", "TileGreen");
-  LoadTexture("/home/miguel/Desktop/Books/Programming/Game Development/Tower Defense/src/include/TileGrey.png", "TileGrey");
-  LoadTexture("/home/miguel/Desktop/Books/Programming/Game Development/Tower Defense/src/include/TileTan.png", "TileTan");
+  LoadTexture("src/assets/TileBrown.png", "TileBrown");
+  LoadTexture("src/assets/TileGreen.png", "TileGreen");
+  LoadTexture("src/assets/TileGrey.png", "TileGrey");
+  LoadTexture("src/assets/TileTan.png", "TileTan");
 
-  LoadTexture("/home/miguel/Desktop/Books/Programming/Game Development/Tower Defense/src/include/Airplane.png", "Airplane");
-  LoadTexture("/home/miguel/Desktop/Books/Programming/Game Development/Tower Defense/src/include/Tower.png", "Tower");
-  LoadTexture("/home/miguel/Desktop/Books/Programming/Game Development/Tower Defense/src/include/Projectile.png", "Projectile");
+  LoadTexture("src/assets/Airplane.png", "Airplane");
+  LoadTexture("src/assets/Tower.png", "Tower");
+  LoadTexture("src/assets/Projectile.png", "Projectile");
 
   mGrid = new Grid(this, 11, 16);
 

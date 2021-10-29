@@ -4,11 +4,17 @@
 
 # Compiler settings - Can be customized.
 CC = g++
-CXXFLAGS = -std=c++11 -Wall
-LDFLAGS = -lSDL2main -lSDL2 -lSDL2_image
+CXXFLAGS = -std=c++11
+LDFLAGS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image 
+
+#INCLUDE_PATHS specifies the additional include paths we'll need
+INCLUDE_PATHS = -IC:\cppDevelopment\SDL-MinGW\i686-w64-mingw32\include\SDL2
+
+#LIBRARY_PATHS specifies the additional library paths we'll need
+LIBRARY_PATHS = -LC:\cppDevelopment\SDL-MinGW\i686-w64-mingw32\lib
 
 # Makefile settings - Can be customized.
-APPNAME = "TowerDefense"
+APPNAME = TowerDefense
 EXT = .cpp
 SRCDIR = src
 OBJDIR = obj
@@ -33,7 +39,7 @@ all: $(APPNAME)
 
 # Builds the app
 $(APPNAME): $(OBJ)
-	$(CC) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CC) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Creates the dependecy rules
 %.d: $(SRCDIR)/%$(EXT)

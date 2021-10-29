@@ -1,8 +1,8 @@
 #pragma once
 #include "Component.h"
 #include "Actor.h"
-#include <SDL2/SDL_main.h>
-#include <SDL2/SDL_image.h>
+#include "..\sdl\include\SDL2\SDL.h"
+#include "..\sdl\include\SDL2\SDL_image.h"
 
 class SpriteComponent : public Component
 {
