@@ -16,6 +16,11 @@ Enemy::Enemy(Game *game, Grid *grid) : Actor(game)
   HP = 5;
 }
 
+Enemy::~Enemy()
+{
+  mGrid->RemoveEnemy(this);
+}
+
 void Enemy::GenerateOutput(SDL_Renderer *renderer)
 {
   mSprite->Draw(renderer);

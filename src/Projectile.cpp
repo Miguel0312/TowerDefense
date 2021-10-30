@@ -13,6 +13,11 @@ Projectile::Projectile(Game *game, Grid *grid, Enemy *enemy) : Actor(game)
   linVel = 300;
 }
 
+Projectile::~Projectile()
+{
+  mGrid->RemoveProjectile(this);
+}
+
 void Projectile::UpdateActor(float deltaTime)
 {
   if (mTarget->GetState() == Actor::State::EDead)

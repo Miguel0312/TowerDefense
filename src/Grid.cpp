@@ -171,6 +171,24 @@ void Grid::UpdateActor(float deltaTime)
   }
 }
 
+void Grid::RemoveEnemy(Enemy *enemy)
+{
+  auto iter = std::find(mEnemies.begin(), mEnemies.end(), enemy);
+  if (iter != mEnemies.end())
+  {
+    mEnemies.erase(iter);
+  }
+}
+
+void Grid::RemoveProjectile(Projectile *enemy)
+{
+  auto iter = std::find(mProjectiles.begin(), mProjectiles.end(), enemy);
+  if (iter != mProjectiles.end())
+  {
+    mProjectiles.erase(iter);
+  }
+}
+
 void Grid::AddTower(Vector2 position)
 {
   Tile *target = GetTile(static_cast<int>(position.y) / mTileSize, static_cast<int>(position.x) / mTileSize);

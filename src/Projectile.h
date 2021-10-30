@@ -6,6 +6,8 @@ class Projectile : public Actor
 {
 public:
   Projectile(Game *game, Grid *grid, Enemy *target);
+  ~Projectile();
+
   void UpdateActor(float deltaTime);
   void GenerateOutput(SDL_Renderer *renderer);
 

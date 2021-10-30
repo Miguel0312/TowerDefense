@@ -22,6 +22,9 @@ public:
   void Begin() { mRunning = true; }
   bool IsRunning() { return mRunning; }
 
+  void RemoveProjectile(class Projectile *projectile);
+  void RemoveEnemy(class Enemy *enemy);
+
   std::vector<class Enemy *> GetEnemies() { return mEnemies; }
 
 private:

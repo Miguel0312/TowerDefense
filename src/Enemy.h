@@ -6,6 +6,7 @@ class Enemy : public Actor
 {
 public:
   Enemy(Game *game, Grid *grid);
+  ~Enemy();
 
   void UpdateActor(float deltaTime) override;
   void GenerateOutput(SDL_Renderer *renderer);
