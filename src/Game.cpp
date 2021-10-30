@@ -6,12 +6,16 @@
 #include "Grid.h"
 #include "Enemy.h"
 
+const int ROWS = 11;
+const int COLUMNS = 16;
+const int TILE_SIZE = 64;
+
 Game::Game()
 {
   mIsRunning = true;
   mTicksCount = 0;
-  width = 1024;
-  height = 704;
+  width = COLUMNS * TILE_SIZE;
+  height = ROWS * TILE_SIZE;
 }
 
 /*
@@ -30,7 +34,7 @@ bool Game::Initialize()
 
   IMG_Init(IMG_INIT_PNG);
 
-  mWindow = SDL_CreateWindow("Tower Defense", 100, 0, width, height, 0);
+  mWindow = SDL_CreateWindow("Tower Defense", 100, 100, width, height, 0);
   if (!mWindow)
   {
     SDL_Log("Unable to create SDL window: %s", SDL_GetError());
@@ -53,7 +57,7 @@ bool Game::Initialize()
   LoadTexture("src/assets/Tower.png", "Tower");
   LoadTexture("src/assets/Projectile.png", "Projectile");
 
-  mGrid = new Grid(this, 11, 16);
+  mGrid = new Grid(this, ROWS, COLUMNS, TILE_SIZE);
 
   mGrid->FindPath(mGrid->GetBegin(), mGrid->GetEnd());
   mGrid->UpdatePathTiles(mGrid->GetBegin(), mGrid->GetEnd());

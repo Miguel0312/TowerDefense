@@ -1,6 +1,9 @@
 #include "Tower.h"
 #include "Enemy.h"
 
+const float RELOAD_TIME = 3.0f;
+const int RANGE = 300;
+
 /*
 *Creates a new Tower in a Tile
 */
@@ -8,6 +11,7 @@ Tower::Tower(Game *game, Grid *grid, Tile *tile) : Actor(game)
 {
   mGrid = grid;
   SetPosition(tile->GetPosition());
+  SetState(State::EPaused);
 
   mSprite = new SpriteComponent(this, 70);
   mSprite->SetTexture(game->GetTexture("Tower"));
@@ -48,13 +52,13 @@ void Tower::UpdateActor(float deltaTime)
   if (target)
   {
     Vector2 targetVector = (GetPosition() - target->GetPosition());
-    if (targetVector.LengthSq() < 300 * 300)
+    if (targetVector.LengthSq() < pow(RANGE, 2))
     {
       SetRotation(Math::Pi - atan2f(targetVector.y, targetVector.x));
       if (relTime < 0)
       {
         mGrid->AddProjectile(this);
-        relTime += 3.0f;
+        relTime = RELOAD_TIME;
       }
     }
   }

@@ -1,6 +1,9 @@
 #include "Projectile.h"
 #include "Enemy.h"
 
+const int SPEED = 300;
+const int HITBOX_RADIUS = 15;
+
 /*
 *Sets up the Enmy that will be the target of the Projectile
 */
@@ -11,7 +14,7 @@ Projectile::Projectile(Game *game, Grid *grid, Enemy *enemy) : Actor(game)
 
   mSprite = new SpriteComponent(this, 100);
   mSprite->SetTexture(game->GetTexture("Projectile"));
-  linVel = 300;
+  linVel = SPEED;
 }
 
 Projectile::~Projectile()
@@ -35,7 +38,7 @@ void Projectile::UpdateActor(float deltaTime)
   Vector2 targetVector = (GetPosition() - mTarget->GetPosition());
   SetRotation(Math::Pi - atan2f(targetVector.y, targetVector.x));
 
-  if (targetVector.LengthSq() < 15 * 15)
+  if (targetVector.LengthSq() < pow(HITBOX_RADIUS, 2))
   {
     SetState(Actor::State::EDead);
     mTarget->MakeDamage(1);

@@ -1,5 +1,8 @@
 #include "Enemy.h"
 
+const int SPEED = 100;
+const int HIT_POINTS = 5;
+
 /*
 *The constructor places the Enemy at the beginning of the path
 *Also, it determines the speed and the HP of the enemy
@@ -14,10 +17,10 @@ Enemy::Enemy(Game *game, Grid *grid) : Actor(game)
   mSprite = new SpriteComponent(this, 100);
   mSprite->SetTexture(game->GetTexture("Airplane"));
 
-  linVel = 100;
+  linVel = SPEED;
   angVel = 1.0f;
 
-  HP = 5;
+  HP = HIT_POINTS;
 }
 
 /*

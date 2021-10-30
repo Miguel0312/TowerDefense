@@ -9,7 +9,7 @@
 class Grid : public Actor
 {
 public:
-  Grid(class Game *game, int rows, int columns);
+  Grid(class Game *game, int rows, int columns, int tileSize);
 
   void UpdateActor(float deltaTime) override;
 
@@ -22,7 +22,7 @@ public:
 
   void AddTower(Vector2 position);
   void AddProjectile(class Tower *Tower);
-  void Begin() { mRunning = true; }
+  void Begin();
   bool IsRunning() { return mRunning; }
 
   void RemoveProjectile(class Projectile *projectile);

@@ -4,16 +4,18 @@
 #include "Projectile.h"
 #include <algorithm>
 
+const float SPAWN_TIME = 5.0f;
+
 /*
 *The constructor allows the creation of grids of different sizes
 *It creates the Tiles that will be used during the game and determines which tile is adjacent to which. This information is used by the path finding algorithm.
 *Finally it creates a start and end point to the path that will be created
 */
-Grid::Grid(class Game *game, int rows, int columns) : Actor(game)
+Grid::Grid(class Game *game, int rows, int columns, int tileSize) : Actor(game)
 {
   mRows = rows;
   mColumns = columns;
-  mTileSize = 64;
+  mTileSize = tileSize;
   for (int i = 0; i < mRows; i++)
   {
     for (int j = 0; j < mColumns; j++)
@@ -42,9 +44,9 @@ Grid::Grid(class Game *game, int rows, int columns) : Actor(game)
     }
   }
 
-  mBeginTile = GetTile(5, 0);
+  mBeginTile = GetTile(rows / 2, 0);
   mBeginTile->SetTileState(Tile::TileState::EStart);
-  mEndTile = GetTile(5, 15);
+  mEndTile = GetTile(rows / 2, columns - 1);
   mEndTile->SetTileState(Tile::TileState::EBase);
 
   enemyTimer = 1.0f;
@@ -174,7 +176,7 @@ void Grid::UpdateActor(float deltaTime)
     enemyTimer -= deltaTime;
     if (enemyTimer < 0)
     {
-      enemyTimer += 5.0f;
+      enemyTimer += SPAWN_TIME;
       mEnemies.emplace_back(new Enemy(GetGame(), this));
     }
   }
@@ -196,6 +198,15 @@ void Grid::RemoveProjectile(Projectile *enemy)
   {
     mProjectiles.erase(iter);
   }
+}
+
+void Grid::Begin()
+{
+  for (auto tower : mTowers)
+  {
+    tower->SetState(State::EActive);
+  }
+  mRunning = true;
 }
 
 /*
