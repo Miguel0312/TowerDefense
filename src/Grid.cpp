@@ -4,6 +4,11 @@
 #include "Projectile.h"
 #include <algorithm>
 
+/*
+*The constructor allows the creation of grids of different sizes
+*It creates the Tiles that will be used during the game and determines which tile is adjacent to which. This information is used by the path finding algorithm.
+*Finally it creates a start and end point to the path that will be created
+*/
 Grid::Grid(class Game *game, int rows, int columns) : Actor(game)
 {
   mRows = rows;
@@ -46,6 +51,9 @@ Grid::Grid(class Game *game, int rows, int columns) : Actor(game)
   mRunning = false;
 }
 
+/*
+*Determine the shortest path between the star and end points using A* search algorithm
+*/
 bool Grid::FindPath(Tile *start, Tile *goal)
 {
   for (int i = 0; i < mRows; i++)
@@ -69,6 +77,7 @@ bool Grid::FindPath(Tile *start, Tile *goal)
     // Add adjacent nodes to open set
     for (Tile *neighbor : current->mAdjacent)
     {
+      //Ignores blocked tiles
       if (neighbor->mBlocked)
       {
         continue;
@@ -126,6 +135,9 @@ bool Grid::FindPath(Tile *start, Tile *goal)
   return (current == start) ? true : false;
 }
 
+/*
+*Once the path is recalculated we have to update the TileState
+*/
 void Grid::UpdatePathTiles(Tile *start, Tile *goal)
 {
   // Reset all tiles to normal (except for start/end)
@@ -147,12 +159,9 @@ void Grid::UpdatePathTiles(Tile *start, Tile *goal)
   }
 }
 
-void Grid::GenerateOutput(SDL_Renderer *renderer)
-{
-  for (auto tile : mTiles)
-    tile->GenerateOutput(renderer);
-}
-
+/*
+*Updates the enemy timer, so that one enemy spawns every 5 seconds
+*/
 void Grid::UpdateActor(float deltaTime)
 {
   for (auto tile : mTiles)
@@ -165,7 +174,7 @@ void Grid::UpdateActor(float deltaTime)
     enemyTimer -= deltaTime;
     if (enemyTimer < 0)
     {
-      enemyTimer = 5.0f;
+      enemyTimer += 5.0f;
       mEnemies.emplace_back(new Enemy(GetGame(), this));
     }
   }
@@ -189,6 +198,10 @@ void Grid::RemoveProjectile(Projectile *enemy)
   }
 }
 
+/*
+*First, it checks wheter or not there will be a valid path connecting the start and the end if a Tower is placed at the target Tile. If so, it creates a turret and place it there.
+*Then, update the path and the tiles
+*/
 void Grid::AddTower(Vector2 position)
 {
   Tile *target = GetTile(static_cast<int>(position.y) / mTileSize, static_cast<int>(position.x) / mTileSize);
@@ -205,7 +218,6 @@ void Grid::AddTower(Vector2 position)
 
   mTowers.emplace_back(new Tower(GetGame(), this, target));
   UpdatePathTiles(GetBegin(), GetEnd());
-  UpdateActor(0);
 }
 
 void Grid::AddProjectile(Tower *tower)

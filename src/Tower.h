@@ -2,12 +2,14 @@
 #include "Grid.h"
 #include "Actor.h"
 
+/*
+*A Tower is placed at a Tile and shoots projectiles at its target
+*/
 class Tower : public Actor
 {
 public:
   Tower(Game *game, Grid *grid, Tile *tile);
 
-  void GenerateOutput(SDL_Renderer *renderer);
   void UpdateActor(float deltaTime) override;
   class Enemy *ClosestEnemy();
 

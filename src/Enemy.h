@@ -2,6 +2,10 @@
 #include "Grid.h"
 #include "Tile.h"
 
+/*
+*Enemy is the object that the player has to destroy using the towers
+*It has an HP that will signal when it is killed, and a Tile target, that is the next Tile to which it is currently heading
+*/
 class Enemy : public Actor
 {
 public:
@@ -9,7 +13,6 @@ public:
   ~Enemy();
 
   void UpdateActor(float deltaTime) override;
-  void GenerateOutput(SDL_Renderer *renderer);
 
   void MakeDamage(int damage) { HP -= damage; }
 

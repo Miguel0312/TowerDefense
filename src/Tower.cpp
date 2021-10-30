@@ -1,8 +1,9 @@
 #include "Tower.h"
 #include "Enemy.h"
 
-const float PI = 3.14159;
-
+/*
+*Creates a new Tower in a Tile
+*/
 Tower::Tower(Game *game, Grid *grid, Tile *tile) : Actor(game)
 {
   mGrid = grid;
@@ -14,11 +15,9 @@ Tower::Tower(Game *game, Grid *grid, Tile *tile) : Actor(game)
   relTime = 0;
 }
 
-void Tower::GenerateOutput(SDL_Renderer *renderer)
-{
-  mSprite->Draw(renderer);
-}
-
+/*
+*Finds the closest enemy and sets it as the target
+*/
 class Enemy *Tower::ClosestEnemy()
 {
   float distSq = 10000000.0f;
@@ -38,6 +37,10 @@ class Enemy *Tower::ClosestEnemy()
   return nullptr;
 }
 
+/*
+*Rotate the Tower such that it is aligned to its target
+*If it has a close target, and it has reloaded, shoot a Projectile at it
+*/
 void Tower::UpdateActor(float deltaTime)
 {
   Enemy *target = ClosestEnemy();
@@ -47,11 +50,11 @@ void Tower::UpdateActor(float deltaTime)
     Vector2 targetVector = (GetPosition() - target->GetPosition());
     if (targetVector.LengthSq() < 300 * 300)
     {
-      SetRotation(PI - atan2f(targetVector.y, targetVector.x));
+      SetRotation(Math::Pi - atan2f(targetVector.y, targetVector.x));
       if (relTime < 0)
       {
         mGrid->AddProjectile(this);
-        relTime = 3.0f;
+        relTime += 3.0f;
       }
     }
   }

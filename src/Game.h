@@ -5,6 +5,11 @@
 #include <map>
 #include <string>
 
+/*
+*Game is the principal class of the program.
+*It stores all the Actors and Sprites
+*It is responsible to initializing, updating and close the game
+*/
 class Game
 {
 public:

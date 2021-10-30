@@ -4,6 +4,9 @@
 #include "..\sdl\include\SDL2\SDL.h"
 #include "..\sdl\include\SDL2\SDL_image.h"
 
+/*
+*Sprite Component allows an Actor to have an image displayed in the screen
+*/
 class SpriteComponent : public Component
 {
 public:

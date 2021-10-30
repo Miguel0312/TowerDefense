@@ -2,6 +2,9 @@
 #include "Grid.h"
 #include "SpriteComponent.h"
 
+/*
+*The projectile is fired by a Tower and follows an Enemy
+*/
 class Projectile : public Actor
 {
 public:
@@ -9,7 +12,6 @@ public:
   ~Projectile();
 
   void UpdateActor(float deltaTime);
-  void GenerateOutput(SDL_Renderer *renderer);
 
 private:
   Grid *mGrid;

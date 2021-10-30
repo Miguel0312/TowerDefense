@@ -1,8 +1,9 @@
 #include "Projectile.h"
 #include "Enemy.h"
 
-const float PI = 3.14159;
-
+/*
+*Sets up the Enmy that will be the target of the Projectile
+*/
 Projectile::Projectile(Game *game, Grid *grid, Enemy *enemy) : Actor(game)
 {
   mGrid = grid;
@@ -18,6 +19,11 @@ Projectile::~Projectile()
   mGrid->RemoveProjectile(this);
 }
 
+/*
+*The Projectile advances through he current line connecting it and its target
+*If it is close enough, it makes damage and is destroyed
+*If the Enemy that the Projectile is following is destroyed, it is also deleted
+*/
 void Projectile::UpdateActor(float deltaTime)
 {
   if (mTarget->GetState() == Actor::State::EDead)
@@ -27,7 +33,7 @@ void Projectile::UpdateActor(float deltaTime)
   }
 
   Vector2 targetVector = (GetPosition() - mTarget->GetPosition());
-  SetRotation(PI - atan2f(targetVector.y, targetVector.x));
+  SetRotation(Math::Pi - atan2f(targetVector.y, targetVector.x));
 
   if (targetVector.LengthSq() < 15 * 15)
   {
@@ -37,9 +43,4 @@ void Projectile::UpdateActor(float deltaTime)
 
   mPosition.x += linVel * deltaTime * cos(mRotation);
   mPosition.y -= linVel * deltaTime * sin(mRotation);
-}
-
-void Projectile::GenerateOutput(SDL_Renderer *renderer)
-{
-  mSprite->Draw(renderer);
 }

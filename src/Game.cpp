@@ -14,6 +14,11 @@ Game::Game()
   height = 704;
 }
 
+/*
+*In the initialization will initialize SDL and SDL_image and create a Window and a Renderer
+*Then, it will load the Textures, so they can be accessed quickly during the programs execution
+*Finally, it will create a Grid 
+*/
 bool Game::Initialize()
 {
   int SDLResult = SDL_Init(SDL_INIT_VIDEO);
@@ -52,11 +57,13 @@ bool Game::Initialize()
 
   mGrid->FindPath(mGrid->GetBegin(), mGrid->GetEnd());
   mGrid->UpdatePathTiles(mGrid->GetBegin(), mGrid->GetEnd());
-  mGrid->UpdateActor(0);
 
   return true;
 }
 
+/*
+*Deletes the Actors, destroys the Window and quits SDL
+*/
 void Game::Shutdown()
 {
   while (!mActors.empty())
@@ -68,6 +75,9 @@ void Game::Shutdown()
   SDL_Quit();
 }
 
+/*
+*Main loop of the game
+*/
 void Game::RunLoop()
 {
   while (mIsRunning)
@@ -78,6 +88,12 @@ void Game::RunLoop()
   }
 }
 
+/*
+*The key commands for the Game are the following:
+*Press "ESC" to quit
+*Left click to add turrets before the game has started
+*Right click to star the game
+*/
 void Game::ProcessInput()
 {
   SDL_Event event;
@@ -113,6 +129,11 @@ void Game::ProcessInput()
   }
 }
 
+/*
+*We first set the game to update every 16 milisseconds (60 FPS)
+*Then, we update the Actors
+*Finally, the Dead Actors are removed
+*/
 void Game::UpdateGame()
 {
   while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16))
@@ -153,6 +174,9 @@ void Game::UpdateGame()
   mTicksCount = SDL_GetTicks();
 }
 
+/*
+*Cleans the screen and draws the Sprites
+*/
 void Game::GenerateOutput()
 {
   SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 0);
@@ -198,6 +222,9 @@ void Game::RemoveActor(Actor *actor)
   }
 }
 
+/*
+*Loads the texture and save them in a std::map, so they can be quickly accessed during the program's execution
+*/
 void Game::LoadTexture(const char *fileName, const char *textureName)
 {
   SDL_Surface *surface = IMG_Load(fileName);
@@ -220,6 +247,9 @@ void Game::LoadTexture(const char *fileName, const char *textureName)
     SDL_Log("Error");
 }
 
+/*
+*Retrieves a texture
+*/
 SDL_Texture *Game::GetTexture(std::string textureName)
 {
   for (auto it = mTextures.begin(); it != mTextures.end(); it++)
@@ -249,5 +279,6 @@ void Game::AddSprite(SpriteComponent *sprite)
 void Game::RemoveSprite(SpriteComponent *sprite)
 {
   auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
-  mSprites.erase(iter);
+  if (iter != mSprites.end())
+    mSprites.erase(iter);
 }

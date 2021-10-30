@@ -1,5 +1,9 @@
 #include "Enemy.h"
 
+/*
+*The constructor places the Enemy at the beginning of the path
+*Also, it determines the speed and the HP of the enemy
+*/
 Enemy::Enemy(Game *game, Grid *grid) : Actor(game)
 {
   mGrid = grid;
@@ -16,16 +20,19 @@ Enemy::Enemy(Game *game, Grid *grid) : Actor(game)
   HP = 5;
 }
 
+/*
+*In addition to the default operations made to delete an actor, Enemy is also removed from the Grid where it is stored
+*/
 Enemy::~Enemy()
 {
   mGrid->RemoveEnemy(this);
 }
 
-void Enemy::GenerateOutput(SDL_Renderer *renderer)
-{
-  mSprite->Draw(renderer);
-}
-
+/*
+*If the Actor gets to the center of its target's center, the target is updated to the next Tile, or, if it gets to the end of the path, its State is set to Dead, so it will be destroyed.
+*If its HP gets to 0, we aksi set the State to Dead
+*If we set a new target, the new velocity vector is determined
+*/
 void Enemy::UpdateActor(float deltaTime)
 {
   if ((target->GetPosition() - this->GetPosition()).Length() < 3)

@@ -23,8 +23,13 @@ public:
   Actor(class Game *game);
   virtual ~Actor();
 
-  void Update(float deltaTime);
   void UpdateComponents(float deltaTime);
+
+  /*
+  *The non overridable method Update is the one that is called by the class Game
+  *The overridable method UpdateActor alllows the user to add specific features without using components
+  */
+  void Update(float deltaTime);
   virtual void UpdateActor(float deltaTime){};
 
   State GetState() { return mState; }

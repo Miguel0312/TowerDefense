@@ -2,6 +2,10 @@
 #include "Actor.h"
 #include "Tile.h"
 
+/*
+*The Grid is formed by Tiles. It allows the addition of Turrets and spawns the Enemies
+*It uses a A* search algorithm to update the path when needed
+*/
 class Grid : public Actor
 {
 public:
@@ -11,7 +15,6 @@ public:
 
   bool FindPath(Tile *startTile, Tile *endTile);
   void UpdatePathTiles(Tile *start, Tile *goal);
-  void GenerateOutput(SDL_Renderer *renderer);
 
   Tile *GetTile(int row, int column) { return mTiles[row * mColumns + column]; }
   Tile *GetBegin() const { return mBeginTile; }

@@ -1,5 +1,8 @@
 #include "Tile.h"
 
+/*
+*Sets up the State and Texture of the Tile
+*/
 Tile::Tile(class Game *game) : Actor(game)
 {
   tState = EDefault;
@@ -8,11 +11,9 @@ Tile::Tile(class Game *game) : Actor(game)
   UpdateTexture();
 }
 
-void Tile::GenerateOutput(SDL_Renderer *renderer)
-{
-  mSprite->Draw(renderer);
-}
-
+/*
+*Determines the texture of the Tile based on its current status
+*/
 void Tile::UpdateTexture()
 {
   std::string text;

@@ -4,6 +4,9 @@
 #include "Actor.h"
 #include "SpriteComponent.h"
 
+/*
+*Tiles are used to position the Tower and to give Enemies a route
+*/
 class Tile : public Actor
 {
 public:
@@ -25,9 +28,9 @@ public:
 
   Tile *GetParent() const { return mParent; }
 
-  void GenerateOutput(SDL_Renderer *renderer);
   SpriteComponent *mSprite;
 
+  //The attributes f, g, h, mInOpenSet, mInClosedSet and mBlocked are used to implement the A* algorithm
 private:
   float f;
   float g;

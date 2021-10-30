@@ -16,6 +16,9 @@ Actor::Actor(Game *game)
   game->AddActor(this);
 }
 
+/*
+*The destructor will remove the actor from the game and delete the components of the actor
+*/
 Actor::~Actor()
 {
   mGame->RemoveActor(this);
