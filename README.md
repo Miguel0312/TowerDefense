@@ -8,7 +8,7 @@ Left mouse button: Places a tower on the tile. Apart from the beginning and end 
 Right mouse button: Initializes the game, making enemies come at a constant rate. After it is pressed, no new towers can be placed in the path.<br>
 ESC button: exits game
 
-#Compilation and Use
+# Compilation and Use
 The repository already contains TowerDefense.exe file containing the game corresponding to the code in the repository. <br>
-If you want to change it, by substituting the values of the enemies' HP or spawn rate, Tower's reload time, among others, this can be easily done by changing the const variables on the beginning of the Tower.cpp, Enemy.cpp, Projectile.cpp and Grid.cpp.
+If you want to change it, by substituting the values of the enemies' HP or spawn rate, Tower's reload time, among others, this can be easily done by changing the const variables on the beginning of the Tower.cpp, Enemy.cpp, Projectile.cpp and Grid.cpp.<br>
 To recompile it using mingw32, go to the root folder and run "$mingw32-make.exe". No external library is needed.
