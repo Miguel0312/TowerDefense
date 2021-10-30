@@ -217,7 +217,8 @@ void Grid::AddTower(Vector2 position)
 {
   Tile *target = GetTile(static_cast<int>(position.y) / mTileSize, static_cast<int>(position.x) / mTileSize);
 
-  if (target->mBlocked)
+  //Once the game initializes, the Tower can't be placed in the route
+  if ((mRunning && target->GetTileState() == Tile::TileState::EPath) || target->mBlocked)
     return;
 
   target->mBlocked = true;

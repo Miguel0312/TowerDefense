@@ -120,16 +120,13 @@ void Game::ProcessInput()
   int x, y;
   Uint32 buttons = SDL_GetMouseState(&x, &y);
 
-  if (!mGrid->IsRunning())
+  if (SDL_BUTTON(buttons) & 1)
   {
-    if (SDL_BUTTON(buttons) & 1)
-    {
-      mGrid->AddTower(Vector2(x, y));
-    }
-    if (buttons & 4)
-    {
-      mGrid->Begin();
-    }
+    mGrid->AddTower(Vector2(x, y));
+  }
+  if (buttons & 4)
+  {
+    mGrid->Begin();
   }
 }
 
