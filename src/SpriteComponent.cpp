@@ -4,6 +4,12 @@
 SpriteComponent::SpriteComponent(Actor *actor, int drawOrder) : Component(actor)
 {
   mDrawOrder = drawOrder;
+  mOwner->GetGame()->AddSprite(this);
+}
+
+SpriteComponent::~SpriteComponent()
+{
+	mOwner->GetGame()->RemoveSprite(this);
 }
 
 void SpriteComponent::SetTexture(SDL_Texture *texture)

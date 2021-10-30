@@ -1,5 +1,6 @@
 #include <string>
 #include <algorithm>
+#include <iostream>
 #include "Game.h"
 #include "Actor.h"
 #include "Grid.h"
@@ -103,12 +104,10 @@ void Game::ProcessInput()
   {
     if (SDL_BUTTON(buttons) & 1)
     {
-      //SDL_Log("Yes");
       mGrid->AddTower(Vector2(x, y));
     }
     if (buttons & 4)
     {
-      //SDL_Log("Yes2");
       mGrid->Begin();
     }
   }
@@ -121,11 +120,6 @@ void Game::UpdateGame()
   float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
   if (deltaTime > 0.05)
     deltaTime = 0.05;
-
-  for (auto sprite : mSprites)
-  {
-    sprite->Update(deltaTime);
-  }
 
   mUpdatingActors = true;
 
@@ -153,10 +147,8 @@ void Game::UpdateGame()
 
   for (auto actor : deadActors)
   {
-    RemoveActor(actor);
+    delete actor;
   }
-
-  mGrid->UpdateActor(deltaTime);
 
   mTicksCount = SDL_GetTicks();
 }
@@ -165,13 +157,10 @@ void Game::GenerateOutput()
 {
   SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 0);
   SDL_RenderClear(mRenderer);
-
   for (auto sprite : mSprites)
   {
     sprite->Draw(mRenderer);
   }
-
-  mGrid->GenerateOutput(mRenderer);
 
   SDL_RenderPresent(mRenderer);
 }
@@ -190,15 +179,22 @@ void Game::AddActor(Actor *actor)
 
 void Game::RemoveActor(Actor *actor)
 {
-  if (std::find(mActors.begin(), mActors.end(), actor) != mActors.end())
+  // Is it in pending actors?
+  auto iter = std::find(mPendingActors.begin(), mPendingActors.end(), actor);
+  if (iter != mPendingActors.end())
   {
-    auto index = std::find(mActors.begin(), mActors.end(), actor);
-    mActors.erase(index);
+    // Swap to end of vector and pop off (avoid erase copies)
+    std::iter_swap(iter, mPendingActors.end() - 1);
+    mPendingActors.pop_back();
   }
-  else if (std::find(mPendingActors.begin(), mPendingActors.end(), actor) != mPendingActors.end())
+
+  // Is it in actors?
+  iter = std::find(mActors.begin(), mActors.end(), actor);
+  if (iter != mActors.end())
   {
-    auto index = std::find(mPendingActors.begin(), mPendingActors.end(), actor);
-    mPendingActors.erase(index);
+    // Swap to end of vector and pop off (avoid erase copies)
+    std::iter_swap(iter, mActors.end() - 1);
+    mActors.pop_back();
   }
 }
 
@@ -248,4 +244,10 @@ void Game::AddSprite(SpriteComponent *sprite)
   }
 
   mSprites.insert(iter, sprite);
+}
+
+void Game::RemoveSprite(SpriteComponent *sprite)
+{
+  auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
+  mSprites.erase(iter);
 }

@@ -15,17 +15,18 @@ public:
 
   SDL_Texture *GetTexture(std::string textureName);
 
+  void AddActor(class Actor *actor);
+  void RemoveActor(class Actor *actor);
+
+  void AddSprite(class SpriteComponent *sprite);
+  void RemoveSprite(class SpriteComponent *sprite);
+
 private:
   void ProcessInput();
   void UpdateGame();
   void GenerateOutput();
 
-  void AddActor(class Actor *actor);
-  void RemoveActor(class Actor *actor);
-
   void LoadTexture(const char *fileName, const char *textureName);
-
-  void AddSprite(class SpriteComponent *sprite);
 
   SDL_Window *mWindow;
   SDL_Renderer *mRenderer;

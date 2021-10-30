@@ -151,12 +151,6 @@ void Grid::GenerateOutput(SDL_Renderer *renderer)
 {
   for (auto tile : mTiles)
     tile->GenerateOutput(renderer);
-  for (auto enemy : mEnemies)
-    enemy->GenerateOutput(renderer);
-  for (auto tower : mTowers)
-    tower->GenerateOutput(renderer);
-  for (auto proj : mProjectiles)
-    proj->GenerateOutput(renderer);
 }
 
 void Grid::UpdateActor(float deltaTime)
@@ -173,40 +167,6 @@ void Grid::UpdateActor(float deltaTime)
     {
       enemyTimer = 5.0f;
       mEnemies.emplace_back(new Enemy(GetGame(), this));
-    }
-
-    std::vector<Enemy *> deadEnemies;
-    std::vector<Projectile *> deadProjectiles;
-
-    for (auto enemy : mEnemies)
-    {
-      enemy->UpdateActor(deltaTime);
-      if (enemy->GetState() == Actor::State::EDead)
-        deadEnemies.emplace_back(enemy);
-    }
-
-    for (auto tower : mTowers)
-    {
-      tower->UpdateActor(deltaTime);
-    }
-
-    for (auto proj : mProjectiles)
-    {
-      proj->UpdateActor(deltaTime);
-      if (proj->GetState() == Actor::State::EDead)
-        deadProjectiles.emplace_back(proj);
-    }
-
-    for (auto enemy : deadEnemies)
-    {
-      auto index = std::find(mEnemies.begin(), mEnemies.end(), enemy);
-      mEnemies.erase(index);
-    }
-
-    for (auto proj : deadProjectiles)
-    {
-      auto index = std::find(mProjectiles.begin(), mProjectiles.end(), proj);
-      mProjectiles.erase(index);
     }
   }
 }

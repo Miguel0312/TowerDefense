@@ -4,9 +4,15 @@
 #include "Game.h"
 #include "Component.h"
 
+/*
+*An Actor is an entity in the game. Initially, it has only a position in the game world. Other behaviors (sprites, user input, etc) are added by inserting Components.
+*/
 class Actor
 {
 public:
+  /*
+  *State is either active, paused(Actor doesn't update) or dead (which makes the Actor be deleted) 
+  */
   enum State
   {
     EActive,
@@ -19,7 +25,7 @@ public:
 
   void Update(float deltaTime);
   void UpdateComponents(float deltaTime);
-  virtual void UpdateActor(float deltaTime);
+  virtual void UpdateActor(float deltaTime){};
 
   State GetState() { return mState; }
   Vector2 GetPosition() { return mPosition; }
