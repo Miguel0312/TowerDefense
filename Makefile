@@ -8,10 +8,10 @@ CXXFLAGS = -std=c++11
 LDFLAGS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image 
 
 #INCLUDE_PATHS specifies the additional include paths we'll need
-INCLUDE_PATHS = -IC:\cppDevelopment\SDL-MinGW\i686-w64-mingw32\include\SDL2
+INCLUDE_PATHS = -Isdl\include\SDL2
 
 #LIBRARY_PATHS specifies the additional library paths we'll need
-LIBRARY_PATHS = -LC:\cppDevelopment\SDL-MinGW\i686-w64-mingw32\lib
+LIBRARY_PATHS = -Lsdl\lib
 
 # Makefile settings - Can be customized.
 APPNAME = TowerDefense
